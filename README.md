@@ -1,98 +1,89 @@
-#include <limits.h>
-
 #include <stdio.h>
 #include <stdlib.h>
-Struct Stack {
-	Int top;
-	Unsigned capacity;
-	Int* array;
-};
-Struct Stack* createStack(unsigned capacity)
-{
-	Struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
-	Stack->capacity = capacity;
-	Stack->top = -1;
-	Stack->array = (int*)malloc(stack->capacity * sizeof(int));
-	Return stack;
+struct node
+{ 
+int Element; 
+struct node *Next; 
+}*List = NULL; 
+typedef struct node Stack; 
+int IsEmpty(); 
+void Push(int e); 
+void Pop(); 
+void Top();
+void Display(); 
+int main() 
+{ 
+int ch, e; 
+do{ 
+ printf("1.PUSH 2.POP 3.TOP 4.DISPLAY 5.EXIT"); 
+ printf("\nEnter your choice : "); 
+ scanf("%d", &ch); 
+ switch(ch) 
+ { 
+ case 1: 
+ printf("Enter the element : "); 
+ scanf("%d", &e); 
+ Push(e); 
+ break; 
+ case 2: 
+ Pop(); 
+ break; 
+ case 3: 
+ Top(); 
+ break; 
+ case 4: 
+ Display(); 
+ break; 
+ } 
+ } while(ch <= 4); 
+return 0; 
+} 
+int IsEmpty()  { 
+if(List == NULL) 
+ return 1; 
+else
+ return 0; 
+} 
+void Push(int e)  { 
+Stack *NewNode = malloc(sizeof(Stack)); 
+ NewNode->Element = e; 
+if(IsEmpty()) 
+ NewNode->Next = NULL; 
+else
+ NewNode->Next = List; 
+ List = NewNode; 
 }
-Int isFull(struct Stack* stack)
-{
-	Return stack->top == stack->capacity – 1;
-}
-Int isempty(struct Stack* stack)
-{
-	Return stack->top == -1;
-}
-Void push(struct Stack* stack, int item)
-{
-	If (isFull(stack))
-		Return;
-	Stack->array[++stack->top] = item;
-}
-Int pop(struct Stack* stack)
-{
-	If (isempty(stack))
-		Return INT_MIN;
-	Return stack->array[stack->top--];
-}
-Int peek(struct Stack* stack)
-{
-	If (isempty(stack))
-		Return INT_MIN;
-	Return stack->array[stack->top];
-}
-Void deletemid(struct Stack* stack, int n,int curr)
-{
-If (isempty(stack) || curr == n)
-	Return;
-Int x =peek(stack);
-Pop(stack);
-Deletemid(stack, n, curr+1);
-If (curr != n/2)
-	Push(stack,x);
-}
-Void insertmid(struct Stack*stack, int n, int curr,int p)
-{
-    If (isempty(stack) || curr == n)
-	Return;
-	Int x =peek(stack);
-    Pop(stack);
-    Insertmid(stack, n, curr+1,p);
-    If (curr == n/2-1)
-	Push(stack,p);
-	Push(stack,x);
-}
-Int main()
-{
-	Struct Stack* stack = createStack(100);
-	Printf(“Enter no of elements you want to store initially\n”);
-	Int n;
-	Scanf(“%d”,&n);
-	Printf(“Enter the elements\n”);
-	Int a[n];
-	For(int i=0;i<n;i++)
-    {
-        Scanf(“%d”,&a[i]);
-        Push(stack,a[i]);
-    }
-    Printf(“Do you wanna insert or delete \n 1: insertion\n 2: deletetion\n”);
-    Int t;
-    Scanf(“%d”,&t);
-    If(t==2)
-    Deletemid(stack,n,0);
-    Else if(t==1)
-    {
-        Printf(“Enter the element you want to insert\n”);
-        Int p;
-        Scanf(“%d”,&p);
-        Insertmid(stack,n,0,p);
-    }
-    Printf(“\nAfter operation\n”);
-    While (!isempty(stack))
-	{
-		Int p=peek(stack);
-		Pop(stack);
-		Printf(“%d  “,p);
-	}
-	Return 0;
+void Pop()  { 
+if(IsEmpty()) 
+ printf("Stack is Underflow...!\n"); 
+else { 
+ Stack *TempNode; 
+ TempNode = List; 
+ List = List->Next; 
+ printf("%d\n", TempNode->Element); 
+ free(TempNode); 
+ } 
+} 
+void Top() 
+{ 
+if(IsEmpty()) 
+ printf("Stack is Underflow...!\n"); 
+else
+ printf("%d\n", List->Element); 
+} 
+void Display() 
+{ 
+if(IsEmpty()) 
+ printf("Stack is Underflow...!\n"); 
+else
+ { 
+ Stack *Position; 
+ Position = List; 
+ while(Position != NULL) 
+ { 
+ printf("%d\t", Position->Element); 
+ Position = Position->Next; 
+ } 
+ printf("\n"); 
+ } 
 }
